@@ -20,3 +20,75 @@
 # Попробуйте добавить дополнительные функции в вашу программу, такие как
 # сохранение информации о зоопарке в файл и возможность её загрузки,
 # чтобы у вашего зоопарка было "постоянное состояние" между запусками программы.
+
+class Animal():
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def make_sound(self):
+        print('Животное кричит')
+
+    def eat(self):
+        print('Животное ест')
+
+
+class Bird(Animal):
+    def __init__(self, name, age, feathers, sound='Чирик'):
+        super().__init__(name, age)
+        self.feathers = feathers
+        self.sound = sound
+
+    def make_sound(self):
+        print(self.sound)
+
+    def eat(self):
+        print('Птица клюет')
+
+    def fly(self):
+        print('Птица летает')
+
+
+class Mammal(Animal):
+    def __init__(self, name, age, fur, sound='Р-р-р'):
+        super().__init__(name, age)
+        self.fur = fur
+        self.sound = sound
+
+    def make_sound(self):
+        print(self.sound)
+
+    def eat(self):
+        print('Млекопитающее ест')
+
+    def walk(self):
+        print('Млекопитающее идет')
+
+
+class Reptile(Animal):
+    def __init__(self, name, age, scales, sound='Ш-ш-ш'):
+        super().__init__(name, age)
+        self.scales = scales
+        self.sound = sound
+
+    def make_sound(self):
+        print(self.sound)
+
+    def eat(self):
+        print('Рептилия глотает еду')
+
+    def crawl(self):
+        print('Рептилия ползет')
+
+
+def animal_sound(animals):
+    for animal in animals:
+        animal.make_sound()
+
+
+animals_list = [Bird('орел', 6, 'коричневый', 'SQUEAK'),
+                Mammal('медведь', 12, 'белый'),
+                Reptile('питон', 27, 'желтый')]
+
+animal_sound(animals_list)
+
