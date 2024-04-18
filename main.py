@@ -73,7 +73,9 @@ class Reptile(Animal):
 
 
 class Zoo():
-    def __init__(self):
+    def __init__(self, name, address):
+        self.name = name
+        self.address = address
         self.animals_list = []
         self.employees_list = []
 
@@ -102,23 +104,22 @@ class Zoo():
             return 'Введена не верная должность'
 
     def info_zoo_animals(self):
-        print('Список животных в зоопарке:')
+        info_animals = 'Список животных в зоопарке:\n'
         for i, animal in enumerate(self.animals_list, start=1):
-            print(f'{i}. {animal.name}, '
-                  f'возраст - {animal.age}, '
-                  f'покров - {animal.cover}, '
-                  f'звук - {animal.sound}' )
-        print()
-
-    
+            info_animals += f'{i}. {animal.name}, '\
+                            f'возраст - {animal.age}, '\
+                            f'покров - {animal.cover}, '\
+                            f'звук - {animal.sound}\n'
+        return info_animals
 
     def info_zoo_employees(self):
-        print('Список сотрудников в зоопарке:')
+        info_employees = 'Список сотрудников в зоопарке:\n'
         for i, employee in enumerate(self.employees_list, start=1):
-            print(f'{i}. {employee.name}, '
-                  f'возраст - {employee.age}, '
-                  f'должность - {employee.job}')
-        print()
+            info_employees += f'{i}. {employee.name}, '\
+                              f'возраст - {employee.age}, '\
+                              f'должность - {employee.job}\n'
+        return info_employees
+
 
 class ZooKeeper():
     def __init__(self, name, age, job='смотритель зоопарка'):
@@ -146,13 +147,21 @@ def animal_sound(animals):
     print()
 
 
+def save_zoo_info(zoo):
+    with open('zoo_info.txt', 'w', encoding='UTF-8') as zi:
+        zi.write(f'{zoo.name}\n')
+        zi.write(f'Адрес: {zoo.address}\n\n')
+        zi.write(f'{zoo.info_zoo_animals()}\n')
+        zi.write(f'{zoo.info_zoo_employees()}\n')
+
+
 animals_list1 = [Bird('орел', 6, 'коричневые перья', 'SQUEAK'),
                  Mammal('медведь', 12, 'белый мех'),
                  Reptile('питон', 27, 'желтая чешуя')]
 
 animal_sound(animals_list1)
 
-zoo1 = Zoo()
+zoo1 = Zoo('Московский зоопарк', 'Б. Грузинская ул., 1')
 
 bird1 = zoo1.add_animal('птица', 'орел', 6, 'коричневые перья', 'SQUEAK')
 mammal1 = zoo1.add_animal('млекопитающее', 'медведь', 12, 'белый мех', 'Р-р-р')
@@ -162,8 +171,8 @@ zookeeper1 = zoo1.add_employee('Роман', 29, 'смотритель зооп�
 zookeeper2 = zoo1.add_employee('Ольга', 36, 'смотритель зоопарка')
 vet1 = zoo1.add_employee('Афанасий', 42, 'ветеринар')
 
-zoo1.info_zoo_animals()
-zoo1.info_zoo_employees()
+print(zoo1.info_zoo_animals())
+print(zoo1.info_zoo_employees())
 
 mammal1.make_sound()
 mammal1.walk()
@@ -175,3 +184,5 @@ reptile1.eat()
 
 zookeeper2.feed_animal(mammal1)
 vet1.heal_animal(bird1)
+
+save_zoo_info(zoo1)
