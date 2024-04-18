@@ -27,68 +27,151 @@ class Animal():
         self.age = age
 
     def make_sound(self):
-        print('Животное кричит')
+        print(f'{self.name} кричит')
 
     def eat(self):
-        print('Животное ест')
+        print(f'{self.name} ест')
 
 
 class Bird(Animal):
-    def __init__(self, name, age, feathers, sound='Чирик'):
+    def __init__(self, name, age, cover, sound='Чирик'):
         super().__init__(name, age)
-        self.feathers = feathers
+        self.cover = cover
         self.sound = sound
 
     def make_sound(self):
         print(self.sound)
 
-    def eat(self):
-        print('Птица клюет')
-
     def fly(self):
-        print('Птица летает')
+        print(f'{self.name} летает')
 
 
 class Mammal(Animal):
-    def __init__(self, name, age, fur, sound='Р-р-р'):
+    def __init__(self, name, age, cover, sound='Р-р-р'):
         super().__init__(name, age)
-        self.fur = fur
+        self.cover = cover
         self.sound = sound
 
     def make_sound(self):
         print(self.sound)
 
-    def eat(self):
-        print('Млекопитающее ест')
-
     def walk(self):
-        print('Млекопитающее идет')
+        print(f'{self.name} идет')
 
 
 class Reptile(Animal):
-    def __init__(self, name, age, scales, sound='Ш-ш-ш'):
+    def __init__(self, name, age, cover, sound='Ш-ш-ш'):
         super().__init__(name, age)
-        self.scales = scales
+        self.cover = cover
         self.sound = sound
 
     def make_sound(self):
         print(self.sound)
 
-    def eat(self):
-        print('Рептилия глотает еду')
-
     def crawl(self):
-        print('Рептилия ползет')
+        print(f'{self.name} ползет')
+
+
+class Zoo():
+    def __init__(self):
+        self.animals_list = []
+        self.employees_list = []
+
+    def add_animal(self, animal, name, age, cover, sound):
+        if animal.lower() == 'птица' or 'млекопитающее' or 'рептилия':
+            if animal.lower() == 'птица':
+                new_animal = Bird(name, age, cover, sound)
+            elif animal.lower() == 'млекопитающее':
+                new_animal = Mammal(name, age, cover, sound)
+            else:
+                new_animal = Reptile(name, age, cover, sound)
+            self.animals_list.append(new_animal)
+            return new_animal
+        else:
+            return 'Введено не верное животное'
+
+    def add_employee(self, name, age, job):
+        if job.lower() == 'смотритель зоопарка' or 'ветеринар':
+            if job.lower() == 'смотритель зоопарка':
+                new_employee = ZooKeeper(name, age)
+            else:
+                new_employee = Veterinarian(name, age)
+            self.employees_list.append(new_employee)
+            return new_employee
+        else:
+            return 'Введена не верная должность'
+
+    def info_zoo_animals(self):
+        print('Список животных в зоопарке:')
+        for i, animal in enumerate(self.animals_list, start=1):
+            print(f'{i}. {animal.name}, '
+                  f'возраст - {animal.age}, '
+                  f'покров - {animal.cover}, '
+                  f'звук - {animal.sound}' )
+        print()
+
+    
+
+    def info_zoo_employees(self):
+        print('Список сотрудников в зоопарке:')
+        for i, employee in enumerate(self.employees_list, start=1):
+            print(f'{i}. {employee.name}, '
+                  f'возраст - {employee.age}, '
+                  f'должность - {employee.job}')
+        print()
+
+class ZooKeeper():
+    def __init__(self, name, age, job='смотритель зоопарка'):
+        self.name = name
+        self.age = age
+        self.job = job
+
+    def feed_animal(self, animal):
+        print(f'{self.name} кормит животное {animal.name}')
+
+
+class Veterinarian():
+    def __init__(self, name, age, job='ветеринар'):
+        self.name = name
+        self.age = age
+        self.job = job
+
+    def heal_animal(self, animal):
+        print(f'{self.name} лечит животное {animal.name}')
 
 
 def animal_sound(animals):
     for animal in animals:
         animal.make_sound()
+    print()
 
 
-animals_list = [Bird('орел', 6, 'коричневый', 'SQUEAK'),
-                Mammal('медведь', 12, 'белый'),
-                Reptile('питон', 27, 'желтый')]
+animals_list1 = [Bird('орел', 6, 'коричневые перья', 'SQUEAK'),
+                 Mammal('медведь', 12, 'белый мех'),
+                 Reptile('питон', 27, 'желтая чешуя')]
 
-animal_sound(animals_list)
+animal_sound(animals_list1)
 
+zoo1 = Zoo()
+
+bird1 = zoo1.add_animal('птица', 'орел', 6, 'коричневые перья', 'SQUEAK')
+mammal1 = zoo1.add_animal('млекопитающее', 'медведь', 12, 'белый мех', 'Р-р-р')
+reptile1 = zoo1.add_animal('рептилия', 'питон', 27, 'желтая чешуя', 'Ш-ш-ш')
+
+zookeeper1 = zoo1.add_employee('Роман', 29, 'смотритель зоопарка')
+zookeeper2 = zoo1.add_employee('Ольга', 36, 'смотритель зоопарка')
+vet1 = zoo1.add_employee('Афанасий', 42, 'ветеринар')
+
+zoo1.info_zoo_animals()
+zoo1.info_zoo_employees()
+
+mammal1.make_sound()
+mammal1.walk()
+mammal1.eat()
+
+reptile1.make_sound()
+reptile1.crawl()
+reptile1.eat()
+
+zookeeper2.feed_animal(mammal1)
+vet1.heal_animal(bird1)
