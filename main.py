@@ -80,7 +80,7 @@ class Zoo():
         self.employees_list = []
 
     def add_animal(self, animal, name, age, cover, sound):
-        if animal.lower() == 'птица' or 'млекопитающее' or 'рептилия':
+        if animal.lower() in ('птица', 'млекопитающее', 'рептилия'):
             if animal.lower() == 'птица':
                 new_animal = Bird(name, age, cover, sound)
             elif animal.lower() == 'млекопитающее':
@@ -93,7 +93,7 @@ class Zoo():
             return 'Введено не верное животное'
 
     def add_employee(self, name, age, job):
-        if job.lower() == 'смотритель зоопарка' or 'ветеринар':
+        if job.lower() in ('смотритель зоопарка', 'ветеринар'):
             if job.lower() == 'смотритель зоопарка':
                 new_employee = ZooKeeper(name, age)
             else:
